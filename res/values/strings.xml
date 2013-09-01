@@ -62,4 +62,7 @@
     <string name="title_activity_autores_relacionados">AutoresRelacionados</string>
     <string name="title_activity_pinturas_relacionadas">PinturasRelacionadas</string>
     <string name="title_activity_detalle">Detalle</string>
+    <string name="title_activity_menu_lumi2">MenuLumi2</string>
+    <string name="title_activity_info_activity2">InfoActivity2</string>
+
 </resources>
