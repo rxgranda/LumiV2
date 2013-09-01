@@ -1,119 +1,55 @@
 package com.qualcomm.QCARSamples.CloudRecognition;
-import android.app.Activity;
-import android.content.Context;
-import android.graphics.Bitmap;
+
 import android.os.Bundle;
-import android.util.AttributeSet;
-import android.view.LayoutInflater;
+import android.app.Activity;
 import android.view.Menu;
-import android.widget.ImageView;
-import android.widget.RatingBar;
-import android.widget.TextView;
-
-import com.qualcomm.QCARSamples.CloudRecognition.R;
-
+import android.view.MenuItem;
+import android.support.v4.app.NavUtils;
+import android.annotation.TargetApi;
+import android.os.Build;
 
 public class InfoActivity extends Activity {
 
-	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_info);
-	}
-
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.info, menu);
-		return true;
-	}
-
-//	public PictureOverlayView(Context context)
-//    {
-//        this(context, null);
-//    }
-//
-//
-//    public PictureOverlayView(Context context, AttributeSet attrs)
-//    {
-//        this(context, attrs, 0);
-//    }
-//
-//
-//    public PictureOverlayView(Context context, AttributeSet attrs, int defStyle)
-//    {
-//        super(context, attrs, defStyle);
-//        inflateLayout(context);
-//
-//    }
-
-
-    /** Inflates the Custom View Layout */
-//    private void inflateLayout(Context context)
-//    {
-//
-//        final LayoutInflater inflater = LayoutInflater.from(context);
-//
-//        // Generates the layout for the view
-//        inflater.inflate(R.layout.bitmap_layout, this, true);
-//    }
-
-
-    /** Sets Picture title in View */
-    public void setPictureTitle(String pictureTitle)
-    {
-        TextView tv = (TextView) findViewById(R.id.custom_view_title);
-        tv.setText(pictureTitle);
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_info_activity2);
+        // Show the Up button in the action bar.
+        setupActionBar();
     }
 
-
-    /** Sets Picture Author in View */
-    public void setPictureAuthor(String pictureAuthor)
-    {
-        TextView tv = (TextView) findViewById(R.id.custom_view_author);
-        tv.setText(pictureAuthor);
+    /**
+     * Set up the {@link android.app.ActionBar}, if the API is available.
+     */
+    @TargetApi(Build.VERSION_CODES.HONEYCOMB)
+    private void setupActionBar() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
+            getActionBar().setDisplayHomeAsUpEnabled(true);
+        }
     }
 
-
-    /** Sets Picture Price in View */
-    public void setPictureYear(String pictureYear)
-    {
-        TextView tv = (TextView) findViewById(R.id.custom_view_price_old);
-        tv.setText(pictureYear);
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.info_activity2, menu);
+        return true;
     }
 
-
-//    /** Sets Picture Number of Ratings in View */
-//    public void setPictureRatingCount(String ratingCount)
-//    {
-//        TextView tv = (TextView) findViewById(R.id.custom_view_rating_text);
-//        tv.setText(getContext().getString(R.string.string_openParentheses)
-//                + ratingCount + getContext().getString(R.string.string_ratings)
-//                + getContext().getString(R.string.string_closeParentheses));
-//    }
-
-
-    /** Sets Picture Description in View */
-//    public void setPictureDescription(String pictureDescription)
-//    {
-//        TextView tv = (TextView) findViewById(R.id.picture_description);
-//        tv.setText(getContext().getString(R.string.string_$) + pictureDescription);
-//    }
-
-
-    /** Sets Picture in View from a bitmap */
-    public void setCoverViewFromBitmap(Bitmap picture)
-    {
-        ImageView iv = (ImageView) findViewById(R.id.custom_view_book_cover);
-        iv.setImageBitmap(picture);
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+        case android.R.id.home:
+            // This ID represents the Home or Up button. In the case of this
+            // activity, the Up button is shown. Use NavUtils to allow users
+            // to navigate up one level in the application structure. For
+            // more details, see the Navigation pattern on Android Design:
+            //
+            // http://developer.android.com/design/patterns/navigation.html#up-vs-back
+            //
+            NavUtils.navigateUpFromSameTask(this);
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
-
-    /** Sets Picture Rating in View */
-    public void setRating(String rating)
-    {
-        RatingBar rb = (RatingBar) findViewById(R.id.custom_view_rating);
-        rb.setRating(Float.parseFloat(rating));
-    }
 }
-

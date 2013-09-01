@@ -1,7 +1,5 @@
 package com.qualcomm.QCARSamples.CloudRecognition;
 
-import com.qualcomm.QCARSamples.CloudRecognition.R;
-
 import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;
@@ -22,10 +20,10 @@ public class MenuLumi extends Activity {
 		getMenuInflater().inflate(R.menu.menu_lumi, menu);
 		return true;
 	}
-	
-	public void irPinacoteca(View view) {
-	    Intent intent = new Intent(this, Pinacoteca.class);	
-	    startActivity(intent);
+	public void irCloudReco(View view)
+	{
+        Intent i = new Intent(this, CloudReco.class);
+        startActivity(i);
 	}
 
 }
