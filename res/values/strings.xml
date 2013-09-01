@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Lumi</string>
+    <string name="activity_splash_title">CloudReco</string>
+    <string name="activity_splash_subtitle">sample application</string>
+    <string name="about_title">About</string>
+    <string name="about_text">This sample app illustrates how the Vuforia cloud recognition feature works. The app searches an image database in the cloud to recognize certain book covers and, on successful match, displays information such as their prices and ratings.&lt;br />&lt;br />To use this app:&lt;br />1. Print the book cover images located at &lt;a href="https://developer.vuforia.com/resources/samples/files">developer.vuforia.com/resources/samples/files&lt;/a>&lt;br />&lt;br />2. Point your device at any of the book cover images&lt;br />&lt;br />3. When the book cover is recognized the price and rating for this book is displayed on top of the cover&lt;br />&lt;br />© 2012-2013 Qualcomm Austria Research Center GmbH. All rights reserved.&lt;br />Subject to agreements at &lt;a href="http://developer.vuforia.com/legal/EULA">developer.vuforia.com/legal/EULA &lt;/a>&lt;&lt;br />&lt;br /></string>
+    <string name="button_start">Start</string>
+    <string name="button_OK">OK</string>
+    <string name="string_$">$</string>
+    <string name="string_openParentheses">(</string>
+    <string name="string_closeParentheses">)</string>
+    <string name="string_ratings">ratings</string>
+    <string name="status_bar_scanning">Scanning</string>
+    <string name="content_desc_vuforia_logo">Vuforia Logo</string>
+    <string name="content_desc_vuforia_background">Vuforia Background</string>
+    <string name="book_data_your_price">Your Price</string>
+    <string name="menu_flash_on">Flash On</string>
+    <string name="menu_flash_off">Flash Off</string>
+    <string name="menu_contAutofocus_on">Cont. Autofocus On</string>
+    <string name="menu_contAutofocus_off">Cont. Autofocus Off</string>
+    <string name="menu_camera_title">Options</string>
+    <string name="content_description_cover">Cover</string>
+    <string name="content_description_strike">Strike</string>
+    <string name="content_description_background">Background</string>
+    <string name="book_data_touch_for_more">Touch for more information</string>
+    <string name="UPDATE_ERROR_AUTHORIZATION_FAILED_TITLE">Authorization Error</string>
+    <string name="UPDATE_ERROR_PROJECT_SUSPENDED_TITLE">Authorization Error</string>
+    <string name="UPDATE_ERROR_NO_NETWORK_CONNECTION_TITLE">Network Unavailable</string>
+    <string name="UPDATE_ERROR_SERVICE_NOT_AVAILABLE_TITLE">Service Unavailable</string>
+    <string name="UPDATE_ERROR_UPDATE_SDK_TITLE">Unsupported Version</string>
+    <string name="UPDATE_ERROR_TIMESTAMP_OUT_OF_RANGE_TITLE">Clock Sync Error</string>
+    <string name="UPDATE_ERROR_REQUEST_TIMEOUT_TITLE">Request Timeout</string>
+    <string name="UPDATE_ERROR_BAD_FRAME_QUALITY_TITLE">Poor Camera Image</string>
+    <string name="UPDATE_ERROR_UNKNOWN_TITLE">Service Unavailable</string>
+    <string name="UPDATE_ERROR_AUTHORIZATION_FAILED_DESC">The cloud recognition service access keys are incorrect or have expired.</string>
+    <string name="UPDATE_ERROR_PROJECT_SUSPENDED_DESC">The cloud recognition service has been suspended.</string>
+    <string name="UPDATE_ERROR_NO_NETWORK_CONNECTION_DESC">Please check your internet connection and try again.</string>
+    <string name="UPDATE_ERROR_SERVICE_NOT_AVAILABLE_DESC">The service is unavailable, please try again later.</string>
+    <string name="UPDATE_ERROR_UPDATE_SDK_DESC">The application is using an unsupported version of Vuforia.</string>
+    <string name="UPDATE_ERROR_TIMESTAMP_OUT_OF_RANGE_DESC">Please update the date and time and try again.</string>
+    <string name="UPDATE_ERROR_REQUEST_TIMEOUT_DESC">The network request has timed out, please check your internet connection and try again.</string>
+    <string name="UPDATE_ERROR_BAD_FRAME_QUALITY_DESC">The camera does not have enough detail, please try again later.</string>
+    <string name="UPDATE_ERROR_UNKNOWN_DESC">The service is unavaiable, please try again later.</string>
+    <string name="action_settings">Settings</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="title_activity_splash_screen">SplashScreen</string>
+    <string name="descSplash">LumiLogo</string>
+    <string name="capturar">Capturar</string>
+    <string name="pinacoteca">Pinacoteca</string>
+    <string name="title_activity_info">InfoActivity</string>
+    <string name="title_activity_pinacoteca">Pinacoteca</string>
+
+    <string-array name="ordenarArray">
+        <item>Por orden alfabetico</item>
+        <item>Por Autor</item>
+        <item>Por Clasificación pintura</item>
+        <item>Por Antiguedad</item>
+    </string-array>
+
+    <string name="title_activity_autores_relacionados">AutoresRelacionados</string>
+    <string name="title_activity_pinturas_relacionadas">PinturasRelacionadas</string>
+    <string name="title_activity_detalle">Detalle</string>
+</resources>

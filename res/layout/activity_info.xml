@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+     >
+    
+     <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="120dp"
+        android:background="#909493" >
+
+        <ImageButton
+            android:id="@+id/imageButton4"
+            android:layout_width="50dip"
+            android:layout_height="50dip"
+            android:layout_margin="45dp"
+            android:background="@drawable/home_icon" />
+
+        <ImageButton
+            android:id="@+id/imageButton3"
+            android:layout_width="50dp"
+            android:layout_height="50dip"
+            android:layout_margin="45dp"
+            android:background="@drawable/disckette_icon" />
+
+        <ImageButton
+            android:id="@+id/imageButton1"
+            android:layout_width="50dp"
+            android:layout_height="50dip"
+            android:layout_margin="45dp"
+            android:background="@drawable/pinturasralacionadas" />
+
+        <ImageButton
+            android:id="@+id/imageButton2"
+            android:layout_width="50dp"
+            android:layout_height="50dip"
+            android:layout_margin="45dp"
+            android:background="@drawable/artist_icon" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" >
+
+        <ImageButton
+            android:id="@+id/imageButton5"
+            android:layout_width="500dp"
+            android:layout_height="500dp"
+            android:layout_margin="50dp"
+            android:src="@drawable/ic_launcher" />
+
+        <TextView
+            android:id="@+id/textView1"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_margin="20dp"
+            android:gravity="center"
+            android:text="Nombre_Pintura" />
+    </LinearLayout>
+
+</LinearLayout>
