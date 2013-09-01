@@ -1,14 +1,14 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<LinearLayout xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#FFFFFF"
+    android:weightSum="15"
     android:orientation="vertical"
-    tools:context=".MenuLumi2" >
+    tools:context=".InfoActivity2" xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:layout_weight="1"
         android:background="#E0E0E0"
         android:orientation="vertical" >
@@ -19,27 +19,84 @@
             android:layout_height="30dp"
             android:layout_margin="5dip"
             android:background="@drawable/logo1" />
-    </RelativeLayout>
-<!-- Menu -->
-    <RelativeLayout
-        android:layout_width="match_parent"
-         android:background="#909493"
-        android:layout_height="wrap_content"
-        android:layout_weight="2" >
-        
-        
-    </RelativeLayout>
+    </LinearLayout>
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="8" >
-    </RelativeLayout>
+        android:layout_height="0dp"
+        android:layout_weight="2"
+        android:background="#909493"
+        android:orientation="horizontal" >
 
-    <RelativeLayout
+        <ImageButton
+            android:id="@+id/imageButton2"
+            android:layout_width="0dip"
+            android:layout_height="90dp"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="30dp"
+              android:layout_marginRight="30dp"
+            android:layout_weight="1"
+            android:background="@drawable/home_icon" />
+        
+         <ImageButton
+            android:id="@+id/imageButton3"
+            android:layout_width="0dp"
+            android:layout_height="90dp"
+            android:layout_marginLeft="30dp"
+             android:layout_marginTop="30dp"
+               android:layout_marginRight="30dp"
+            android:layout_weight="1"
+            android:background="@drawable/disckette_icon" />
+         
+         <ImageButton
+            android:id="@+id/imageButton4"
+            android:layout_width="0dp"
+            android:layout_height="90dp"
+            android:layout_marginLeft="30dp"
+             android:layout_marginTop="30dp"
+               android:layout_marginRight="30dp"
+            android:layout_weight="1"
+            android:background="@drawable/pinturasralacionadas" />
+         <ImageButton
+            android:id="@+id/imageButton5"
+            android:layout_width="0dp"
+            android:layout_height="90dp"
+             android:layout_marginTop="30dp"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:layout_weight="1"
+            android:background="@drawable/artist_icon" />
+    </LinearLayout>
+
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
+        android:layout_weight="10" >
+
+        <ImageButton
+            android:id="@+id/imageButton6"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="50dp"
+            android:background="@drawable/artist_icon" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
         android:layout_weight="2" >
-    </RelativeLayout>
+
+        <TextView
+            android:id="@+id/textView1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="20dp"
+            android:gravity="center"
+            android:text="Nombre_Pintura"
+            android:textColor="#000000"
+            android:textSize="30sp"
+            android:textStyle="bold" />
+
+    </LinearLayout>
 
 </LinearLayout>
