@@ -101,7 +101,12 @@ public class PinturasRelacionadas extends Activity {
 
 		//grid.setNumColumns(numColumnasGrid);
 
-		LinkedList <String> jsonList= getPinturasGuardadas(FILENAME);
+		LinkedList <String> jsonList= new LinkedList<String>();
+		String [] pinturasSplit=Control.pintura.getRelations().split("&&");
+		for(String pintura:pinturasSplit){
+			jsonList.add(server+"/pintura/"+pintura);	
+			 DebugLog.LOGD(server+"/pintura/"+pintura);
+		}
 
 		try{
 			for(String jsonDir:jsonList){
@@ -262,16 +267,16 @@ public class PinturasRelacionadas extends Activity {
 	public boolean onOptionsItemSelected(MenuItem item) {
 		// Handle presses on the action bar items
 		switch (item.getItemId()) {
-		case R.id.item1:
+		case R.id.item91:
 			Toast.makeText(this, "Ordenado  Alfabéticamente", Toast.LENGTH_SHORT).show();
 			ordenar(0);
 			return true;
-		case R.id.item2:
+		case R.id.item92:
 			Toast.makeText(this, "Ordenado por Antiguedad", Toast.LENGTH_SHORT).show();
 			ordenar(1);
 			//composeMessage();
 			return true;
-		case R.id.item3:
+		case R.id.item93:
 			Toast.makeText(this, "Ordenado por Autor", Toast.LENGTH_SHORT).show();
 			ordenar(2);
 			//composeMessage();

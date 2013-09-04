@@ -2,7 +2,8 @@ package com.giandroid.lumi.model;
 
 import android.graphics.drawable.Drawable;
 
-public class Author {
+public class Author  implements Comparable<Author>{
+	private static int sort=0;
 	private String name;
 	private String life_period;
 	private String bio;
@@ -60,4 +61,34 @@ public class Author {
 	public void setImagen(Drawable imagen) {
 		this.imagen = imagen;
 	}
+	
+	@Override
+	public int compareTo(Author another) {
+		// TODO Auto-generated method stub
+		if (another==null)
+			return 0;
+		if (sort==0){
+			return getName().compareTo(another.getName());
+		}else if(sort==1){
+			return another.getName().compareTo(getName());
+		}else if(sort ==2) {
+			return getNationality().compareTo(another.getNationality());
+		}else{
+			return getNationality().compareTo(another.getNationality());
+			
+		}		
+		
+		
+		
+			
+	}
+	
+	
+	public static int getSort() {
+		return sort;
+	}
+	public static void setSort(int sort) {
+		Author.sort = sort;
+	}	
+	
 }

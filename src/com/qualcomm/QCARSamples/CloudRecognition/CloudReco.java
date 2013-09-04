@@ -173,12 +173,17 @@ public class CloudReco extends Activity
     	
     }
     public void pinturasRelacionadas(View view)
+    
 	{
-       
+    	Control.pintura=mPictureData;
+    	 Intent i = new Intent(this, PinturasRelacionadas.class);
+         startActivity(i);
 	}
     public void artistasRelacionados(View view)
 	{
-       
+    	Control.pintura=mPictureData;
+   	 Intent i = new Intent(this, AuRelacionados.class);
+        startActivity(i);
 	}
 
     // Different screen orientations supported by the CloudReco system.

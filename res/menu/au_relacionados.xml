@@ -1,0 +1,6 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+    <item android:id="@+id/item81" android:showAsAction="collapseActionView" android:checked="true" android:title="Orden Nombre" android:visible="true" android:titleCondensed="Orden Alfabético" android:enabled="true"></item>
+    <item android:id="@+id/item82" android:showAsAction="collapseActionView" android:title="Orden por Apellido" android:visible="true" android:enabled="true" android:titleCondensed="Orden por Fecha" android:checked="true"></item>
+    <item android:id="@+id/item83" android:showAsAction="collapseActionView" android:title="Orden por Estilo" android:titleCondensed="Orden por Autor" android:visible="true" android:enabled="true"></item>
+	
+</menu>
