@@ -1,8 +1,13 @@
 package com.giandroid.lumi.model;
 
-import android.graphics.Bitmap;
+import java.io.Serializable;
 
-public class Picture {
+import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
+
+@SuppressWarnings("serial")
+public class Picture implements Comparable<Picture>, Serializable {
+	private static int sort=0;
 	private String picUrl;
 	private String title;
 	private String author;
@@ -11,6 +16,7 @@ public class Picture {
 	private String relations;
 	private String technique;
 	private Bitmap picture;
+	private Drawable image;
 	
 	public Bitmap getPicture() {
 		return picture;
@@ -62,6 +68,34 @@ public class Picture {
 	}
 	public Picture() {
 		
+	}
+	public Drawable getImage() {
+		return image;
+	}
+	public void setImage(Drawable image) {
+		this.image = image;
+	}
+	
+	@Override
+	public int compareTo(Picture another) {
+		if (another==null)
+			return 0;
+		if (sort==0){
+			return getTitle().compareTo(another.getTitle());
+		}else if(sort==1){
+			return getYear().compareTo(another.getYear());
+		}else if(sort ==2) {
+			return getAuthor().compareTo(another.getAuthor());
+		}else{
+			return getTechnique().compareTo(another.getTechnique());
+			
+		}		
+	}
+	public static int getSort() {
+		return sort;
+	}
+	public static void setSort(int sort) {
+		Picture.sort = sort;
 	}	
 	
 	

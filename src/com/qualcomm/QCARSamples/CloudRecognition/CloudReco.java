@@ -73,7 +73,7 @@ import com.giandroid.lumi.model.*;
 public class CloudReco extends Activity
 {
     // Defines the Server URL to get the s data
-    private static final String mServerURL = "http://192.168.0.11:8080/lumi/pintura/";
+    private static final String mServerURL = "http://192.168.0.101:8080/lumi/pintura/";
 
     // Different screen orientations supported by the CloudReco system.
     public static final int SCREEN_ORIENTATION_LANDSCAPE = ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE;

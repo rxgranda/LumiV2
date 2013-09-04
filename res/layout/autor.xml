@@ -1,0 +1,126 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+ <LinearLayout 
+                    android:id="@+id/Autor"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="#909493"
+                    android:orientation="vertical" >
+
+                    <ImageView
+                        android:id="@+id/imageView2"
+                        android:layout_width="400dp"
+                        android:layout_height="400dp"
+                        android:layout_gravity="center"
+                      />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical" >
+
+                        <TableLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content" >
+
+                            <TableRow
+                                android:id="@+id/tableRow21"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content" >
+
+                                <TextView
+                                    android:id="@+id/textView21"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Nombre:"
+                                    android:textColor="#FFFFFF"
+                                    android:textSize="30sp" />
+
+                                <TextView
+                                    android:id="@+id/textView22"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="XXXXXXXXXXXXX"
+                                    android:textAppearance="?android:attr/textAppearanceMedium"
+                                    android:textColor="#FFFFFF"
+                                    android:textSize="40sp" />
+                            </TableRow>
+
+                            <TableRow
+                                android:id="@+id/tableRow22"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content" >
+
+                                <TextView
+                                    android:id="@+id/textView23"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Nacionalidad:"
+                                    android:textColor="#FFFFFF"
+                                    android:textSize="30sp" />
+
+                                <TextView
+                                    android:id="@+id/textView24"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="TextView"
+                                    android:textColor="#FFFFFF"
+                                    android:textSize="40sp" />
+                            </TableRow>
+
+                            <TableRow
+                                android:id="@+id/tableRow23"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content" >
+
+                                <TextView
+                                    android:id="@+id/textView25"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Movimiento:"
+                                    android:textColor="#FFFFFF"
+                                    android:textSize="30sp" />
+
+                                <TextView
+                                    android:id="@+id/textView26"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="XXXX"
+                                    android:textColor="#FFFFFF"
+                                    android:textSize="40sp" />
+                            </TableRow>
+
+                            <TableRow
+                                android:id="@+id/tableRow24"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content" >
+                            </TableRow>
+                        </TableLayout>
+                    </LinearLayout>
+
+                    <ScrollView
+                        android:id="@+id/scrollView21"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" >
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="20dp"
+                            android:background="#E0D5B5"
+                            android:orientation="vertical" >
+
+                            <TextView
+                                android:id="@+id/textView27"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_margin="20dp"
+                                android:lines="10"
+                                android:text="TextView" />
+                        </LinearLayout>
+                    </ScrollView>
+                </LinearLayout>
+    
+    
+</FrameLayout>

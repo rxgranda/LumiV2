@@ -64,5 +64,6 @@
     <string name="title_activity_detalle">Detalle</string>
     <string name="title_activity_menu_lumi2">MenuLumi2</string>
     <string name="title_activity_info_activity2">InfoActivity2</string>
+    <string name="title_activity_pinacoteca2">Pinacoteca2</string>
 
 </resources>

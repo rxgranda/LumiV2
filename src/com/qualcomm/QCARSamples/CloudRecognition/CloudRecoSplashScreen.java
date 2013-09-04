@@ -13,41 +13,35 @@ All Rights Reserved.
 
 package com.qualcomm.QCARSamples.CloudRecognition;
 
+import java.util.Timer;
+import java.util.TimerTask;
+
 import android.app.Activity;
 import android.content.Intent;
-import android.content.res.Configuration;
 import android.os.Bundle;
-import android.os.Handler;
+import android.view.Window;
 
 
 public class CloudRecoSplashScreen extends Activity
 {
-    public void onCreate(Bundle savedInstanceState)
-    {
-        super.onCreate(savedInstanceState);
+	private long splashDelay = 3000; //6 segundos
 
-        // Sets the Splash Screen Layout
-        setContentView(R.layout.splash_screen);
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		this.requestWindowFeature(Window.FEATURE_NO_TITLE);
 
-        // Generates a Handler to launch the About Screen
-        // after 2 seconds
-        final Handler handler = new Handler();
-        handler.postDelayed(new Runnable()
-        {
-            public void run()
-            {
-                // Starts the About Screen Activity
-                startActivity(new Intent(CloudRecoSplashScreen.this,
-                        AboutScreen.class));
-            }
-        }, 2000L);
-    }
+		setContentView(R.layout.activity_splash_screen);
+		 TimerTask task = new TimerTask() {
+		      @Override
+		      public void run() {
+		        Intent mainIntent = new Intent().setClass(CloudRecoSplashScreen.this, MenuLumi.class);
+		        startActivity(mainIntent);
+		        finish();//Destruimos esta activity para prevenit que el usuario retorne aqui presionando el boton Atras.
+		      }
+		    };
 
-
-    public void onConfigurationChanged(Configuration newConfig)
-    {
-        // Manages auto rotation for the Splash Screen Layout
-        super.onConfigurationChanged(newConfig);
-        setContentView(R.layout.splash_screen);
-    }
+		    Timer timer = new Timer();
+		    timer.schedule(task, splashDelay);//Pasado los 6 segundos dispara la tarea
+	}
 }

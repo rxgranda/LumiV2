@@ -1,5 +1,7 @@
 package com.giandroid.lumi.model;
 
+import android.graphics.drawable.Drawable;
+
 public class Author {
 	private String name;
 	private String life_period;
@@ -7,6 +9,8 @@ public class Author {
 	private String nationality;
 	private String picUrl;
 	private String relations;
+	private String movimiento;
+	private Drawable imagen;
 	
 	public String getName() {
 		return name;
@@ -43,5 +47,17 @@ public class Author {
 	}
 	public void setRelations(String relations) {
 		this.relations = relations;
+	}
+	public String getMovimiento() {
+		return movimiento;
+	}
+	public void setMovimiento(String movimiento) {
+		this.movimiento = movimiento;
+	}
+	public Drawable getImagen() {
+		return imagen;
+	}
+	public void setImagen(Drawable imagen) {
+		this.imagen = imagen;
 	}
 }
