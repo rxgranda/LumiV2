@@ -51,7 +51,7 @@ public class AboutScreen extends Activity implements OnClickListener
     /** Starts the CloudReco main activity */
     private void startARActivity()
     {
-        Intent i = new Intent(this, CloudReco.class);
+        Intent i = new Intent(this, MenuLumi.class);
         startActivity(i);
     }
     

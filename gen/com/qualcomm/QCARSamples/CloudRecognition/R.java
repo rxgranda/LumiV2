@@ -55,15 +55,16 @@ public final class R {
         public static final int disckette_icon=0x7f02000a;
         public static final int home_icon=0x7f02000b;
         public static final int ic_launcher=0x7f02000c;
-        public static final int logo1=0x7f02000d;
-        public static final int pinacoteca=0x7f02000e;
-        public static final int pinturasralacionadas=0x7f02000f;
-        public static final int rating_bar_full=0x7f020010;
-        public static final int rating_empty=0x7f020011;
-        public static final int rating_full=0x7f020012;
-        public static final int splash_background_tile=0x7f020013;
-        public static final int start=0x7f020014;
-        public static final int tiled_background=0x7f020015;
+        public static final int ic_launcher_old=0x7f02000d;
+        public static final int logo1=0x7f02000e;
+        public static final int pinacoteca=0x7f02000f;
+        public static final int pinturasralacionadas=0x7f020010;
+        public static final int rating_bar_full=0x7f020011;
+        public static final int rating_empty=0x7f020012;
+        public static final int rating_full=0x7f020013;
+        public static final int splash_background_tile=0x7f020014;
+        public static final int start=0x7f020015;
+        public static final int tiled_background=0x7f020016;
     }
     public static final class id {
         public static final int about_text=0x7f0a0000;
@@ -102,25 +103,23 @@ public final class R {
     public static final class layout {
         public static final int about_screen=0x7f030000;
         public static final int activity_info=0x7f030001;
-        public static final int activity_info_activity2=0x7f030002;
-        public static final int activity_menu_lumi=0x7f030003;
-        public static final int activity_menu_lumi2=0x7f030004;
-        public static final int activity_pinacoteca=0x7f030005;
-        public static final int bitmap_layout=0x7f030006;
-        public static final int book_data_layout=0x7f030007;
-        public static final int camera_overlay=0x7f030008;
-        public static final int splash_screen=0x7f030009;
+        public static final int activity_menu_lumi=0x7f030002;
+        public static final int activity_pinacoteca=0x7f030003;
+        public static final int bitmap_layout=0x7f030004;
+        public static final int book_data_layout=0x7f030005;
+        public static final int camera_overlay=0x7f030006;
+        public static final int result_capture_activity=0x7f030007;
+        public static final int splash_screen=0x7f030008;
     }
     public static final class menu {
         public static final int autores_relacionados=0x7f090000;
         public static final int detalle=0x7f090001;
         public static final int info=0x7f090002;
-        public static final int info_activity2=0x7f090003;
+        public static final int info_activity=0x7f090003;
         public static final int menu_lumi=0x7f090004;
-        public static final int menu_lumi2=0x7f090005;
-        public static final int pinacoteca=0x7f090006;
-        public static final int pinturas_relacionadas=0x7f090007;
-        public static final int splash_screen=0x7f090008;
+        public static final int pinacoteca=0x7f090005;
+        public static final int pinturas_relacionadas=0x7f090006;
+        public static final int splash_screen=0x7f090007;
     }
     public static final class string {
         public static final int UPDATE_ERROR_AUTHORIZATION_FAILED_DESC=0x7f060021;

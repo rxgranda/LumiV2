@@ -21,11 +21,13 @@ import java.lang.reflect.Field;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLConnection;
+import java.util.logging.Logger;
 
 import org.apache.http.util.ByteArrayBuffer;
 import org.json.JSONObject;
 import org.json.JSONStringer;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -36,6 +38,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -52,6 +55,7 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup.LayoutParams;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -60,13 +64,16 @@ import com.qualcomm.QCAR.QCAR;
 import com.qualcomm.QCARSamples.CloudRecognition.model.Book;
 import com.qualcomm.QCARSamples.CloudRecognition.utils.DebugLog;
 import com.qualcomm.QCARSamples.CloudRecognition.view.BookOverlayView;
+import com.giandroid.lumi.model.*;
+
 
 
 /** The main activity for the CloudReco sample. */
+@SuppressLint("NewApi")
 public class CloudReco extends Activity
 {
-    // Defines the Server URL to get the books data
-    private static final String mServerURL = "https://ar.qualcomm.at/samples/cloudreco/json/";
+    // Defines the Server URL to get the s data
+    private static final String mServerURL = "http://192.168.0.11:8080/lumi/pintura/";
 
     // Different screen orientations supported by the CloudReco system.
     public static final int SCREEN_ORIENTATION_LANDSCAPE = ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE;
@@ -98,6 +105,10 @@ public class CloudReco extends Activity
     // Stores the current status of the target ( if is being displayed or not )
     private static final int BOOKINFO_NOT_DISPLAYED = 0;
     private static final int BOOKINFO_IS_DISPLAYED = 1;
+    
+    // Stores the current status of the target ( if is being displayed or not )
+    private static final int PICTUREINFO_NOT_DISPLAYED = 0;
+    private static final int PICTUREINFO_IS_DISPLAYED = 1;
 
     // These codes match the ones defined in TargetFinder.h
     static final int INIT_SUCCESS = 2;
@@ -123,7 +134,8 @@ public class CloudReco extends Activity
     static final int SHOW_LOADING_DIALOG = 1;
 
     // Augmented content status
-    private int mBookInfoStatus = BOOKINFO_NOT_DISPLAYED;
+    //private int mBookInfoStatus = BOOKINFO_NOT_DISPLAYED;
+    private int mPictureInfoStatus = PICTUREINFO_NOT_DISPLAYED;
 
     // Status Bar Text
     private String mStatusBarText;
@@ -133,12 +145,22 @@ public class CloudReco extends Activity
     private String mBookJSONUrl;
     private View mLoadingDialogContainer;
     private Texture mBookDataTexture;
+    
+    // Active Picture Data
+    private Picture mPictureData;
+    private String mPictureJSONUrl;
+    //private View mLoadingDialogContainer;
+    private Texture mPictureDataTexture;
 
-    // Indicates if the app is currently loading the book data
+	// Indicates if the app is currently loading the book data
     private boolean mIsLoadingBookData = false;
+    
+    // Indicates if the app is currently loading the picture data
+    private boolean mIsLoadingPictureData = false;
 
-    // AsyncTask to get book data from a json object
-    private GetBookDataTask mGetBookDataTask;
+    // AsyncTask to get  data from a json object
+    //private GetBookDataTask mGetBookDataTask;
+    private GetPictureDataTask mGetPictureDataTask;
 
     // Our OpenGL view:
     private QCARSampleGLView mGlView;
@@ -190,7 +212,7 @@ public class CloudReco extends Activity
     // Detects the double tap gesture for launching the Camera menu
     private GestureDetector mGestureDetector;
 
-    // size of the Texture to be generated with the book data
+    // size of the Texture to be generated with the Picture data
     private static int mTextureSize = 768;
     
     /** Static initializer block to load native libraries on start-up. */
@@ -623,7 +645,7 @@ public class CloudReco extends Activity
             mGlView.onResume();
         }
 
-        mBookInfoStatus = BOOKINFO_NOT_DISPLAYED;
+        mPictureInfoStatus = PICTUREINFO_NOT_DISPLAYED;
 
         // By default the 2D Overlay is hidden
         hide2DOverlay();
@@ -650,30 +672,10 @@ public class CloudReco extends Activity
     protected void onPause()
     {
         DebugLog.LOGD("CloudReco::onPause");
+        DebugLog.LOGE("ESTOY EN EL ONPAUSE");
         super.onPause();
 
-        // Pauses the OpenGLView
-        if (mGlView != null)
-        {
-            mGlView.setVisibility(View.INVISIBLE);
-            mGlView.onPause();
-        }
-
-        // Updates the Application current Status
-        if (mAppStatus == APPSTATUS_CAMERA_RUNNING)
-        {
-            updateApplicationStatus(APPSTATUS_CAMERA_STOPPED);
-        }
-
-        // Disable flash when paused
-        if (mFlash)
-        {
-            mFlash = false;
-            activateFlash(mFlash);
-        }
-
-        // QCAR-specific pause operation
-        QCAR.onPause();
+        
     }
 
 
@@ -1003,17 +1005,17 @@ public class CloudReco extends Activity
             public void onClick(View v)
             {
                 // Updates application status
-                mBookInfoStatus = BOOKINFO_NOT_DISPLAYED;
+                mPictureInfoStatus = PICTUREINFO_NOT_DISPLAYED;
 
                 loadingDialogHandler.sendEmptyMessage(HIDE_LOADING_DIALOG);
 
-                // Checks if the app is currently loading a book data
-                if (mIsLoadingBookData)
+                // Checks if the app is currently loading a picture data
+                if (mIsLoadingPictureData)
                 {
 
                     // Cancels the AsyncTask
-                    mGetBookDataTask.cancel(true);
-                    mIsLoadingBookData = false;
+                    mGetPictureDataTask.cancel(true);
+                    mIsLoadingPictureData = false;
                     
                     // Cleans the Target Tracker Id
                     cleanTargetTrackedId();
@@ -1059,21 +1061,35 @@ public class CloudReco extends Activity
     }
 
 
-    /** Starts the WebView with the Book Extra Data */
+    /** Starts the WebView with the Picture Extra Data */
     public void startWebView(int value)
     {
-        // Checks that we have a valid book data
-        if (mBookData != null)
-        {
-            // Starts an Intent to open the book URL
-            Intent viewIntent = new Intent("android.intent.action.VIEW",
-                    Uri.parse(mBookData.getBookUrl()));
-            System.out.println("\n------- TIENE EL DATO DEL LIBRO "+mBookData.getBookUrl());
-            startActivity(viewIntent);
-        }
+        // Checks that we have a valid picture data
+//        if ( != null)
+//        {
+            // Starts an Intent to open the picture URL
+//            Intent viewIntent = new Intent("android.intent.action.VIEW",
+//                    Uri.parse("http://192.168.0.101:8080/lumi/imagenes/"+mPictureData.getPicUrl()));//ADAPTAR
+//            System.out.println("\n------- TIENE EL DATO DEL LIBRO "+mPictureData.getPicUrl());
+//            startActivity(viewIntent);
+        //}
     }
 
-
+    public void startInfoActivity()
+    {
+    	DebugLog.LOGI("ANTES DE INTENT");
+    	setContentView(R.layout.activity_info);
+    	TextView txtCambiado = (TextView)findViewById(R.id.textView1);
+    	DebugLog.LOGE(mPictureData.getTitle());
+    	txtCambiado.setText(mPictureData.getTitle());
+    	
+    	
+    	
+    	//Intent i = new Intent(CloudReco.this, InfoActivity.class);
+    	DebugLog.LOGI("DESPUES DE INTENT");
+    	//startActivity(i);
+    	DebugLog.LOGI("DESPUES DE START INFO ACT");
+    }
     /** Returns the error message for each error code */
     private String getStatusDescString(int code)
     {
@@ -1167,49 +1183,49 @@ public class CloudReco extends Activity
 
 
     /**
-     * Generates a texture for the book data fecthing the book info from
-     * the specified book URL
+     * Generates a texture for the picture data fecthing the picture info from
+     * the specified picture URL
      */
-    public void createProductTexture(String bookJSONUrl)
+    public void createProductTexture(String pictureJSONUrl)
     {
         // gets book url from parameters
-        mBookJSONUrl = bookJSONUrl.trim();
+        mPictureJSONUrl = pictureJSONUrl.trim();
         DebugLog.LOGD("CREA TEXTURA PRODUCTO");
         // Cleans old texture reference if necessary
-        if (mBookDataTexture != null)
+        if (mPictureDataTexture != null)
         {
-            mBookDataTexture = null;
+            mPictureDataTexture = null;
 
             System.gc();
         }
 
         // Searches for the book data in an AsyncTask
-        mGetBookDataTask = new GetBookDataTask();
-        mGetBookDataTask.execute();
+        mGetPictureDataTask = new GetPictureDataTask();
+        mGetPictureDataTask.execute();
     }
 
 
-    /** Gets the book data from a JSON Object */
-    private class GetBookDataTask extends AsyncTask<Void, Void, Void>
+    /** Gets the picture data from a JSON Object */
+    private class GetPictureDataTask extends AsyncTask<Void, Void, Void>
     {
-        private String mBookDataJSONFullUrl;
+        private String mPictureDataJSONFullUrl;
         private static final String CHARSET = "UTF-8";
 
 
         protected void onPreExecute()
         {
-            mIsLoadingBookData = true;
+            mIsLoadingPictureData = true;
 
-            // Initialize the current book full url to search
+            // Initialize the current picture full url to search
             // for the data
             StringBuilder sBuilder = new StringBuilder();
             DebugLog.LOGD("mServerUR: "+mServerURL);
-            DebugLog.LOGD("mBookJSONUrl: "+mBookJSONUrl);
+            DebugLog.LOGD("mPictureJSONUrl: "+mPictureJSONUrl);
             
             sBuilder.append(mServerURL);
-            sBuilder.append(mBookJSONUrl);
+            sBuilder.append(mPictureJSONUrl);
 
-            mBookDataJSONFullUrl = sBuilder.toString();
+            mPictureDataJSONFullUrl = sBuilder.toString();
 
             // Shows the loading dialog
             loadingDialogHandler.sendEmptyMessage(SHOW_LOADING_DIALOG);
@@ -1222,21 +1238,21 @@ public class CloudReco extends Activity
 
             try
             {
-                // Connects to the Server to get the book data
-                URL url = new URL(mBookDataJSONFullUrl);
+                // Connects to the Server to get the picture data
+                URL url = new URL(mPictureDataJSONFullUrl);
                 connection = (HttpURLConnection) url.openConnection();
                 connection.setRequestProperty("Accept-Charset", CHARSET);
                 connection.connect();
-
+                DebugLog.LOGD("CONETADO PARA OBTENER DATA");
                 int status = connection.getResponseCode();
 
-                // Checks that the book JSON url exists and connection
+                // Checks that the picture JSON url exists and connection
                 // has been successful
                 if (status != HttpURLConnection.HTTP_OK)
                 {
-                    // Cleans book data variables
-                    mBookData = null;
-                    mBookInfoStatus = BOOKINFO_NOT_DISPLAYED;
+                    // Cleans picture data variables
+                    mPictureData = null;
+                    mPictureInfoStatus = PICTUREINFO_NOT_DISPLAYED;
 
                     // Hides loading dialog
                     loadingDialogHandler.sendEmptyMessage(HIDE_LOADING_DIALOG);
@@ -1257,40 +1273,43 @@ public class CloudReco extends Activity
                     builder.append(line);
                 }
 
-                // Cleans any old reference to mBookData
-                if (mBookData != null)
+                // Cleans any old reference to mPictureData
+                if (mPictureData != null)
                 {
-                    mBookData = null;
+                    mPictureData = null;
 
                 }
-
+                DebugLog.LOGD("A POR EL JSON");
                 JSONObject jsonObject = new JSONObject(builder.toString());
                 
-                // Generates a new Book Object with the JSON object data
-                mBookData = new Book();
+                // Generates a new Picture Object with the JSON object data
+                mPictureData = new Picture();//ADAPTAR
 
-                mBookData.setTitle(mBookJSONUrl.toString()+mServerURL.toString());
-                mBookData.setAuthor(jsonObject.getString("author"));
-                mBookData.setBookUrl(jsonObject.getString("bookurl"));
-                mBookData.setPriceList(jsonObject.getString("list price"));
-                mBookData.setPriceYour(jsonObject.getString("your price"));
-                mBookData.setRatingAvg(jsonObject.getString("average rating"));
-                mBookData.setRatingTotal(jsonObject.getString("# of ratings"));
+                mPictureData.setTitle(jsonObject.getString("title"));
+                mPictureData.setDescription(jsonObject.getString("description"));
+                mPictureData.setPicUrl(jsonObject.getString("picUrl"));
+                mPictureData.setRelations(jsonObject.getString("relations"));
+                mPictureData.setTechnique(jsonObject.getString("technique"));
+                mPictureData.setYear(jsonObject.getString("year"));
 
-                // Gets the book thumb image
-                byte[] thumb = downloadImage(jsonObject.getString("thumburl"));
+                DebugLog.LOGD("TITULO: "+mPictureData.getTitle()+" TECNICA: "+mPictureData.getTechnique());
+                // Gets the picture thumb image
+                byte[] thumb = downloadImage(jsonObject.getString("picUrl"));
 
                 if (thumb != null)
                 {
 
                     Bitmap bitmap = BitmapFactory.decodeByteArray(thumb, 0,
                             thumb.length);
-                    mBookData.setThumb(bitmap);
+                    mPictureData.setPicture(bitmap);
                 }
+                
+                DebugLog.LOGE("TERMINO EL RUN IN BACKGROUND");
+                //startInfoActivity();
             }
             catch (Exception e)
             {
-                DebugLog.LOGD("Couldn't get books. e: " + e);
+                DebugLog.LOGD("Couldn't get pictures. e: " + e);
             }
             finally
             {
@@ -1309,72 +1328,76 @@ public class CloudReco extends Activity
 
         protected void onPostExecute(Void result)
         {
-            if (mBookData != null)
+        	DebugLog.LOGE("INTENTO LO QUE CONTIENE ONPOSTEXECUTE");
+            if (mPictureData != null)
             {
-                // Generates a View to display the book data
-                BookOverlayView productView = new BookOverlayView(
-                        CloudReco.this);
+                // Generates a View to display the picture data
+                InfoActivity informationactivity = new InfoActivity();
 
+                DebugLog.LOGE("INTENTO LANZAR INFO");
                 // Updates the view used as a 3d Texture
-                updateProductView(productView, mBookData);
+                startInfoActivity();
 
                 // Sets the layout params
-                productView.setLayoutParams(new LayoutParams(
-                        RelativeLayout.LayoutParams.WRAP_CONTENT,
-                        RelativeLayout.LayoutParams.WRAP_CONTENT));
+                
+//                productView.setLayoutParams(new LayoutParams(
+//                        RelativeLayout.LayoutParams.WRAP_CONTENT,
+//                        RelativeLayout.LayoutParams.WRAP_CONTENT));
 
                 // Sets View measure - This size should be the same as the
                 // texture generated to display the overlay in order for the
                 // texture to be centered in screen
-                productView.measure(MeasureSpec.makeMeasureSpec(mTextureSize,
-                        MeasureSpec.EXACTLY), MeasureSpec.makeMeasureSpec(
-                        mTextureSize, MeasureSpec.EXACTLY));
+                
+//                productView.measure(MeasureSpec.makeMeasureSpec(mTextureSize,
+//                        MeasureSpec.EXACTLY), MeasureSpec.makeMeasureSpec(
+//                        mTextureSize, MeasureSpec.EXACTLY));
 
                 // updates layout size
-                productView.layout(0, 0, productView.getMeasuredWidth(),
-                        productView.getMeasuredHeight());
+                
+//                productView.layout(0, 0, productView.getMeasuredWidth(),
+//                        productView.getMeasuredHeight());
 
                 // Draws the View into a Bitmap. Note we are allocating several
                 // large memory buffers thus attempt to clear them as soon as
                 // they are no longer required:
-                Bitmap bitmap = Bitmap.createBitmap(mTextureSize, mTextureSize,
-                        Bitmap.Config.ARGB_8888);
-                
-                Canvas c = new Canvas(bitmap);
-                productView.draw(c);
-
-                // Clear the product view as it is no longer needed
-                productView = null;
-                System.gc();
-                
-                // Allocate int buffer for pixel conversion and copy pixels
-                int width = bitmap.getWidth();
-                int height = bitmap.getHeight();
-                
-                int[] data = new int[bitmap.getWidth() * bitmap.getHeight()];
-                bitmap.getPixels(data, 0, bitmap.getWidth(), 0, 0, bitmap.getWidth(),
-                        bitmap.getHeight());
-                
-                // Recycle the bitmap object as it is no longer needed
-                bitmap.recycle();
-                bitmap = null;
-                c = null;
-                System.gc();   
-                
-                // Generates the Texture from the int buffer
-                mBookDataTexture = Texture.loadTextureFromIntBuffer(data,
-                                        width, height);
-
-                // Clear the int buffer as it is no longer needed
-                data = null;
-                System.gc(); 
-                                
-                // Hides the loading dialog from a UI thread
-                loadingDialogHandler.sendEmptyMessage(HIDE_LOADING_DIALOG);
-
-                mIsLoadingBookData = false;
-
-                productTextureIsCreated();
+//                Bitmap bitmap = Bitmap.createBitmap(mTextureSize, mTextureSize,
+//                        Bitmap.Config.ARGB_8888);
+//                
+//                Canvas c = new Canvas(bitmap);
+////                informationactivity.draw(c);
+//
+//                // Clear the product view as it is no longer needed
+////                productView = null;
+//                System.gc();
+//                
+//                // Allocate int buffer for pixel conversion and copy pixels
+//                int width = bitmap.getWidth();
+//                int height = bitmap.getHeight();
+//                
+//                int[] data = new int[bitmap.getWidth() * bitmap.getHeight()];
+//                bitmap.getPixels(data, 0, bitmap.getWidth(), 0, 0, bitmap.getWidth(),
+//                        bitmap.getHeight());
+//                
+//                // Recycle the bitmap object as it is no longer needed
+//                bitmap.recycle();
+//                bitmap = null;
+//                c = null;
+//                System.gc();   
+//                
+//                // Generates the Texture from the int buffer
+//                mBookDataTexture = Texture.loadTextureFromIntBuffer(data,
+//                                        width, height);
+//
+//                // Clear the int buffer as it is no longer needed
+//                data = null;
+//                System.gc(); 
+//                                
+//                // Hides the loading dialog from a UI thread
+//                loadingDialogHandler.sendEmptyMessage(HIDE_LOADING_DIALOG);
+//
+//                mIsLoadingBookData = false;
+//
+//                productTextureIsCreated();
             }
         }
     }
@@ -1427,15 +1450,19 @@ public class CloudReco extends Activity
 
 
     /** Updates a BookOverlayView with the Book data specified in parameters */
-    private void updateProductView(BookOverlayView productView, Book book)
-    {
-        productView.setBookTitle(book.getTitle());
-        productView.setBookPrice(book.getPriceList());
-        productView.setYourPrice(book.getPriceYour());
-        productView.setBookRatingCount(book.getRatingTotal());
-        productView.setRating(book.getRatingAvg());
-        productView.setBookAuthor(book.getAuthor());
-        productView.setCoverViewFromBitmap(book.getThumb());
+    private void updateProductView(InfoActivity infoactivity, Picture picture)
+    {    	
+    	infoactivity.setPictureAuthor(picture.getAuthor());
+    	infoactivity.setPictureTitle(picture.getTitle());
+    	infoactivity.setPictureYear(picture.getYear());
+    	//startInfoActivity();
+//        productView.setPictureTitle(picture.getTitle());
+//        productView.setBookPrice(book.getPriceList());
+//        productView.setYourPrice(book.getPriceYour());
+//        productView.setBookRatingCount(book.getRatingTotal());
+//        productView.setRating(book.getRatingAvg());
+//        productView.setBookAuthor(book.getAuthor());
+//        productView.setCoverViewFromBitmap(book.getThumb());
     }
 
 
@@ -1446,7 +1473,7 @@ public class CloudReco extends Activity
     public void enterContentMode()
     {
         // Updates state variables
-        mBookInfoStatus = BOOKINFO_IS_DISPLAYED;
+        mPictureInfoStatus = PICTUREINFO_IS_DISPLAYED;
 
         // Shows the 2D Overlay
         show2DOverlay();
@@ -1545,7 +1572,7 @@ public class CloudReco extends Activity
         {
 
             // If the book info is not displayed it performs an Autofocus
-            if (mBookInfoStatus == BOOKINFO_NOT_DISPLAYED)
+            if (mPictureInfoStatus == BOOKINFO_NOT_DISPLAYED)
             {
                 // Calls the Autofocus Native Method
                 autofocus();
@@ -1556,7 +1583,7 @@ public class CloudReco extends Activity
 
                 // If the book info is displayed it shows the book data web view
             }
-            else if (mBookInfoStatus == BOOKINFO_IS_DISPLAYED)
+            else if (mPictureInfoStatus == BOOKINFO_IS_DISPLAYED)
             {
 
                 float x = e.getX(0);
@@ -1573,7 +1600,7 @@ public class CloudReco extends Activity
                         && y > screenUp)
                 {
                     // Starts the webView
-                    startWebView(0);
+                    startInfoActivity(); //LANZAR NUEVO ACTIVITY
                 }
             }
 

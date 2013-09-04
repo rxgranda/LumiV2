@@ -119,21 +119,10 @@
             android:theme="@android:style/Theme.Light.NoTitleBar.Fullscreen" >
         </activity>
         <activity
-            android:name="com.qualcomm.QCARSamples.CloudRecognition.InfoActivity"
-            android:label="@string/title_activity_info" >
+            android:name=".InfoActivity"
+            android:label="@string/app_name"> 
         </activity>
-        <activity
-            android:name="com.qualcomm.QCARSamples.CloudRecognition.MenuLumi2"
-            android:label="@string/title_activity_menu_lumi2" >
-        </activity>
-        <activity
-            android:name="com.qualcomm.QCARSamples.CloudRecognition.InfoActivity2"
-            android:label="@string/title_activity_info_activity2"
-            android:parentActivityName="com.qualcomm.QCARSamples.CloudRecognition.MenuLumi2" >
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.qualcomm.QCARSamples.CloudRecognition.MenuLumi2" />
-        </activity>
+        
     </application>
 
 </manifest>

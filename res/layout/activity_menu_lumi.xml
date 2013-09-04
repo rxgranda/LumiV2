@@ -31,8 +31,8 @@
         android:layout_marginTop="50dp"
         android:layout_weight="10"
         android:background="@drawable/capturar"
-        android:onClick="irCloudReco"
-        android:contentDescription="@string/capturar" />
+        android:contentDescription="@string/capturar" 
+        android:onClick="irCloudReco"/>
 
     <ImageButton
         android:id="@+id/imageButton2"
