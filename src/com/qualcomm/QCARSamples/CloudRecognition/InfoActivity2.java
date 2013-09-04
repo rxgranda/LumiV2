@@ -4,8 +4,10 @@ import android.os.Bundle;
 import android.app.Activity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.support.v4.app.NavUtils;
 import android.annotation.TargetApi;
+import android.content.Intent;
 import android.os.Build;
 
 public class InfoActivity2 extends Activity {
@@ -51,5 +53,28 @@ public class InfoActivity2 extends Activity {
 		}
 		return super.onOptionsItemSelected(item);
 	}
+	
+	
+	public void inicio(View view)
+	{
+        Intent i =  getIntent();
+        startActivity(i);
+	}
+    public void guardar(View view)
+	{
+        Intent i = new Intent(this, CloudReco.class);
+        startActivity(i);
+	}
+    public void pinturasRelacionadas(View view)
+	{
+        Intent i = new Intent(this, CloudReco.class);
+        startActivity(i);
+	}
+    public void artistasRelacionados(View view)
+	{
+        Intent i = new Intent(this, CloudReco.class);
+        startActivity(i);
+	}
+
 
 }

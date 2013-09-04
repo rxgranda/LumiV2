@@ -21,6 +21,7 @@
             android:layout_marginRight="30dp"
             android:layout_marginTop="10dp"
             android:layout_weight="1"
+            android:onClick="inicio"
             android:background="@drawable/home_icon" />
         
          <ImageButton
@@ -31,6 +32,7 @@
              android:layout_marginTop="10dp"
                android:layout_marginRight="30dp"
             android:layout_weight="1"
+             android:onClick="guardar"
             android:background="@drawable/disckette_icon" />
          
          <ImageButton
@@ -41,6 +43,7 @@
              android:layout_marginTop="10dp"
                android:layout_marginRight="30dp"
             android:layout_weight="1"
+             android:onClick="pinturasRelacionadas"
             android:background="@drawable/pinturasralacionadas" />
          <ImageButton
             android:id="@+id/imageButton5"
@@ -50,6 +53,7 @@
             android:layout_marginLeft="30dp"
             android:layout_marginRight="30dp"
             android:layout_weight="1"
+             android:onClick="artistasRelacionados"
             android:background="@drawable/artist_icon" />
     </LinearLayout>
 
@@ -63,6 +67,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_margin="50dp"
+            android:onClick="infoPintura"
             android:background="@drawable/artist_icon" />
     </LinearLayout>
 

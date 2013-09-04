@@ -4,9 +4,11 @@ import android.os.Build;
 import android.os.Bundle;
 import android.annotation.TargetApi;
 import android.app.Activity;
+import android.content.Intent;
 import android.support.v4.app.NavUtils;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
@@ -26,6 +28,28 @@ public class InfoActivity extends Activity {
 	        getMenuInflater().inflate(R.menu.info_activity, menu);
 	        return true;
 	    }
+
+	    
+	    public void inicio(View view)
+		{
+	        Intent i =  getIntent();
+	        startActivity(i);
+		}
+	    public void guardar(View view)
+		{
+	        Intent i = new Intent(this, CloudReco.class);
+	        startActivity(i);
+		}
+	    public void pinturasRelacionadas(View view)
+		{
+	        Intent i = new Intent(this, CloudReco.class);
+	        startActivity(i);
+		}
+	    public void artistasRelacionados(View view)
+		{
+	        Intent i = new Intent(this, CloudReco.class);
+	        startActivity(i);
+		}
 
 	    @Override
 	    public boolean onOptionsItemSelected(MenuItem item) {
@@ -100,5 +124,6 @@ public class InfoActivity extends Activity {
 	        RatingBar rb = (RatingBar) findViewById(R.id.custom_view_rating);
 	        rb.setRating(Float.parseFloat(rating));
 	    }
-
+	    
+	    
 }

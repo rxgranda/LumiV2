@@ -2,6 +2,7 @@ package com.qualcomm.QCARSamples.CloudRecognition;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -20,6 +21,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
+
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.annotation.SuppressLint;
@@ -40,11 +42,14 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import org.apache.http.util.ByteArrayBuffer;
 import org.json.JSONException;
 import org.json.JSONObject;
+
 import com.giandroid.lumi.model.Control;
 import com.giandroid.lumi.model.Picture;
+import com.qualcomm.QCARSamples.CloudRecognition.utils.DebugLog;
 @SuppressLint("NewApi")
 public class Pinacoteca2 extends Activity {
 	private static Picture pinturaSeleccionada;
@@ -65,23 +70,24 @@ public class Pinacoteca2 extends Activity {
 		StrictMode.setThreadPolicy(policy); 
 		setContentView(R.layout.activity_pinacoteca2);
 		////////////////////////////////////////////
-		String FILENAME = "pinacoteca";
+		File root = android.os.Environment.getExternalStorageDirectory(); 
+    	String FILENAME = root.getAbsolutePath()+"/pinacoteca.txt";
 		String string = server+"/pintura/ninallorando.json";
 		String segundo=server+"/pintura/almuerzo.json";
 		String aJsonString="b";
 
 
-		FileOutputStream fos;
-		try {
-			fos = openFileOutput(FILENAME, Context.MODE_PRIVATE);
-			String tmp=string+"\n"+segundo+"\n"+string+"\n"+segundo;
-			fos.write(tmp.getBytes());
-			fos.close();
-		} catch (FileNotFoundException e) {			
-			e.printStackTrace();
-		} catch (IOException e) {			
-			e.printStackTrace();
-		}
+//		FileOutputStream fos;
+//		try {
+//			fos = openFileOutput(FILENAME, Context.MODE_PRIVATE);
+//			String tmp=string+"\n"+segundo+"\n"+string+"\n"+segundo;
+//			fos.write(tmp.getBytes());
+//			fos.close();
+//		} catch (FileNotFoundException e) {			
+//			e.printStackTrace();
+//		} catch (IOException e) {			
+//			e.printStackTrace();
+//		}
 		///////////////////////////////////////////
 
 
@@ -140,7 +146,7 @@ public class Pinacoteca2 extends Activity {
 			@Override
 			public void onItemClick(AdapterView<?> arg0, View arg1, int position,
 					long id) {
-				Toast.makeText(Pinacoteca2.this, id+"", Toast.LENGTH_SHORT).show();
+			
 				Intent intent = new Intent(getBaseContext(), Detalle.class);		
 				Picture p= pinturas.get(position);
 				intent.putExtra("autor", p.getAuthor());
@@ -161,15 +167,28 @@ public class Pinacoteca2 extends Activity {
 		String eol = System.getProperty("line.separator");
 		BufferedReader input = null;
 		StringBuffer buffer=null;
+		File a= new File(filename);
+		FileInputStream is;
 		try {
-			input = new BufferedReader(new InputStreamReader(openFileInput(filename)));
+			is = new FileInputStream(filename);
+		
+        
+        // create new input stream reader
+		InputStreamReader isr = new InputStreamReader(is);
+		try {
+			input = new BufferedReader(isr);
 			String line;
 			buffer = new StringBuffer();
 
 			while ((line = input.readLine()) != null) {
 				numColumnasGrid++;
+				
 				buffer.append(line + eol);
 			}
+		} catch (FileNotFoundException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
@@ -185,7 +204,7 @@ public class Pinacoteca2 extends Activity {
 		String[] words = string2.split("\n");
 		LinkedList <String> jsonList=new LinkedList<String>(); 
 		for (String word: words) {
-
+			 DebugLog.LOGD(word);
 			jsonList.add(word);
 		}
 		numColumnasGrid=numColumnasGrid/3+1;

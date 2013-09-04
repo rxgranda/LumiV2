@@ -14,11 +14,18 @@ package com.qualcomm.QCARSamples.CloudRecognition;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.lang.ref.WeakReference;
 import java.lang.reflect.Field;
 import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.logging.Logger;
@@ -30,6 +37,7 @@ import org.json.JSONStringer;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
@@ -39,11 +47,13 @@ import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.os.StrictMode;
 import android.util.DisplayMetrics;
 import android.view.GestureDetector;
 import android.view.KeyEvent;
@@ -71,9 +81,105 @@ import com.giandroid.lumi.model.*;
 /** The main activity for the CloudReco sample. */
 @SuppressLint("NewApi")
 public class CloudReco extends Activity
+
 {
+	
     // Defines the Server URL to get the s data
     private static final String mServerURL = "http://192.168.0.101:8080/lumi/pintura/";
+    
+   
+    public void inicio(View view)
+    
+	{
+        
+        Intent i = new Intent(this, MenuLumi.class);
+        startActivity(i);
+	}
+    String server="http://192.168.0.101:8080/lumi";
+    public void guardar(View view)
+	{
+    	
+		
+		// Set the Icon for the Dialog
+	
+			
+    	File root = android.os.Environment.getExternalStorageDirectory(); 
+    	
+    	//String FILENAME = dir.getAbsolutePath()+"/pinacoteca";
+		String string = server+"/pintura/"+mPictureJSONUrl;
+		
+		
+		String eol = System.getProperty("line.separator");
+
+		FileOutputStream fos;
+		try {
+			
+			File file =new File(root.getAbsolutePath()+"/pinacoteca.txt");
+			 
+    		//if file doesnt exists, then create it
+    		if(!file.exists()){
+    			file.createNewFile();
+    		}
+ 
+    		//true = append file
+    		FileWriter fileWritter = new FileWriter(root.getAbsolutePath()+"/"+file.getName(),true);
+    	        BufferedWriter bufferWritter = new BufferedWriter(fileWritter);    	            	        	
+			
+			String tmp=string+eol;
+			bufferWritter.write(tmp);
+			 bufferWritter.flush();
+			bufferWritter.close();	  
+		
+			AlertDialog.Builder builder = new AlertDialog.Builder(this);
+	        builder.setTitle("Pinacoteca");
+	        builder.setMessage("Se ha agregado su pintura correctamente");
+	        builder.setPositiveButton("OK",null);
+	        builder.create();
+	        builder.show();  
+			
+		} catch (FileNotFoundException e) {			
+			e.printStackTrace();
+			AlertDialog.Builder builder = new AlertDialog.Builder(this);
+	        builder.setTitle("Pinacoteca");
+	        builder.setMessage("Ha ocurrido un error al almacenar");
+	        builder.setPositiveButton("OK",null);
+	        builder.create();
+	        builder.show();  
+			
+		} catch (IOException e) {			
+			e.printStackTrace();
+			AlertDialog.Builder builder = new AlertDialog.Builder(this);
+	        builder.setTitle("Pinacoteca");
+	        builder.setMessage("Ha ocurrido un error al almacenar");
+	        builder.setPositiveButton("OK",null);
+	        builder.create();
+	        builder.show();  
+		}catch (Exception e) {
+			e.printStackTrace();
+			AlertDialog.Builder builder = new AlertDialog.Builder(this);
+	        builder.setTitle("Pinacoteca");
+	        builder.setMessage("Ha ocurrido un error al almacenar");
+	        builder.setPositiveButton("OK",null);
+	        builder.create();
+	        builder.show();  
+			
+		}
+		
+	}
+    public void infoPintura(View view){
+    	Control.pintura=mPictureData;
+    	  Intent i = new Intent(this, Detalle.class);
+          startActivity(i);
+    	
+    }
+    public void pinturasRelacionadas(View view)
+	{
+       
+	}
+    public void artistasRelacionados(View view)
+	{
+       
+	}
 
     // Different screen orientations supported by the CloudReco system.
     public static final int SCREEN_ORIENTATION_LANDSCAPE = ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE;
@@ -435,6 +541,7 @@ public class CloudReco extends Activity
         }
 
 
+      
         protected void onProgressUpdate(Integer... values)
         {
             // Do something with the progress value "values[0]", e.g. update
@@ -587,6 +694,8 @@ public class CloudReco extends Activity
     protected void onCreate(Bundle savedInstanceState)
     {
         DebugLog.LOGD("CloudReco::onCreate");
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+    	StrictMode.setThreadPolicy(policy); 
         super.onCreate(savedInstanceState);
 
         // Query the QCAR initialization flags:
@@ -1075,6 +1184,24 @@ public class CloudReco extends Activity
         //}
     }
 
+    public Drawable getImagen( String name){
+		URL url;
+
+		try {
+			url = new URL(server+"/imagenes/"+name);
+			InputStream is = (InputStream) url.getContent();
+			Drawable d = Drawable.createFromStream(is, "src name");
+			return d;
+		} catch (MalformedURLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
+	}  
+
     public void startInfoActivity()
     {
     	DebugLog.LOGI("ANTES DE INTENT");
@@ -1082,6 +1209,12 @@ public class CloudReco extends Activity
     	TextView txtCambiado = (TextView)findViewById(R.id.textView1);
     	DebugLog.LOGE(mPictureData.getTitle());
     	txtCambiado.setText(mPictureData.getTitle());
+    	ImageButton imagen=(ImageButton)findViewById(R.id.imageButton6);
+  /// 	 DebugLog.LOGD("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"+mPictureData.getPicUrl());
+    	Drawable pintura=getImagen(mPictureData.getPicUrl());
+    	mPictureData.setImage(pintura);
+    	imagen.setBackground(pintura);
+    
     	
     	
     	
@@ -1281,7 +1414,7 @@ public class CloudReco extends Activity
                 }
                 DebugLog.LOGD("A POR EL JSON");
                 JSONObject jsonObject = new JSONObject(builder.toString());
-                
+
                 // Generates a new Picture Object with the JSON object data
                 mPictureData = new Picture();//ADAPTAR
 
@@ -1291,6 +1424,7 @@ public class CloudReco extends Activity
                 mPictureData.setRelations(jsonObject.getString("relations"));
                 mPictureData.setTechnique(jsonObject.getString("technique"));
                 mPictureData.setYear(jsonObject.getString("year"));
+                mPictureData.setAuthor(jsonObject.getString("author"));
 
                 DebugLog.LOGD("TITULO: "+mPictureData.getTitle()+" TECNICA: "+mPictureData.getTechnique());
                 // Gets the picture thumb image
