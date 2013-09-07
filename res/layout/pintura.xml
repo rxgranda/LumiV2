@@ -39,12 +39,14 @@
 
                         <TableLayout
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content" >
+                            android:layout_height="wrap_content" 
+                            android:paddingLeft="10dp">
 
                             <TableRow
                                 android:id="@+id/tableRow1"
                                 android:layout_width="wrap_content"
-                                android:layout_height="wrap_content" >
+                                android:layout_height="wrap_content" 
+                                android:paddingLeft="80dp">
 
                                 <TextView
                                     android:id="@+id/textView1"
@@ -61,13 +63,14 @@
                                     android:text="XXXXXXXXXXXXX"
                                     android:textAppearance="?android:attr/textAppearanceMedium"
                                     android:textColor="#FFFFFF"
-                                    android:textSize="40sp" />
+                                    android:textSize="30sp" />
                             </TableRow>
 
                             <TableRow
                                 android:id="@+id/tableRow2"
                                 android:layout_width="wrap_content"
-                                android:layout_height="wrap_content" >
+                                android:layout_height="wrap_content" 
+                                android:paddingLeft="80dp">
 
                                 <TextView
                                     android:id="@+id/textView3"
@@ -83,13 +86,14 @@
                                     android:layout_height="wrap_content"
                                     android:text="TextView"
                                     android:textColor="#FFFFFF"
-                                    android:textSize="40sp" />
+                                    android:textSize="30sp" />
                             </TableRow>
 
                             <TableRow
                                 android:id="@+id/tableRow3"
                                 android:layout_width="wrap_content"
-                                android:layout_height="wrap_content" >
+                                android:layout_height="wrap_content" 
+                                android:paddingLeft="80dp">
 
                                 <TextView
                                     android:id="@+id/textView5"
@@ -105,7 +109,7 @@
                                     android:layout_height="wrap_content"
                                     android:text="XXXX"
                                     android:textColor="#FFFFFF"
-                                    android:textSize="40sp" />
+                                    android:textSize="30sp" />
                             </TableRow>
 
                             <TableRow
@@ -133,6 +137,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_margin="20dp"
+                                android:textSize="20dp"
                                 android:lines="10"
                                 android:text="TextView" />
                         </LinearLayout>

@@ -602,9 +602,11 @@ public class CloudReco extends Activity
                 DebugLog.LOGE("InitQCARTask::onPostExecute: " + logMessage
                         + " Exiting.");
 
+            	onDestroy();
+                
                 // Show dialog box with error message:
-                dialogError.setMessage(logMessage);
-                dialogError.show();
+               // dialogError.setMessage(logMessage);
+                //dialogError.show();
             }
         }
     }

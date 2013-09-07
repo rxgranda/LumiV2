@@ -22,12 +22,12 @@
 
                         <TableLayout
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content" >
+                            android:layout_height="wrap_content" android:paddingLeft="10dp" >
 
                             <TableRow
                                 android:id="@+id/tableRow21"
                                 android:layout_width="wrap_content"
-                                android:layout_height="wrap_content" >
+                                android:layout_height="wrap_content" android:paddingLeft="80dp" >
 
                                 <TextView
                                     android:id="@+id/textView21"
@@ -44,13 +44,13 @@
                                     android:text="XXXXXXXXXXXXX"
                                     android:textAppearance="?android:attr/textAppearanceMedium"
                                     android:textColor="#FFFFFF"
-                                    android:textSize="40sp" />
+                                    android:textSize="30sp" />
                             </TableRow>
 
                             <TableRow
                                 android:id="@+id/tableRow22"
                                 android:layout_width="wrap_content"
-                                android:layout_height="wrap_content" >
+                                android:layout_height="wrap_content" android:paddingLeft="80dp">
 
                                 <TextView
                                     android:id="@+id/textView23"
@@ -66,13 +66,13 @@
                                     android:layout_height="wrap_content"
                                     android:text="TextView"
                                     android:textColor="#FFFFFF"
-                                    android:textSize="40sp" />
+                                    android:textSize="30sp" />
                             </TableRow>
 
                             <TableRow
                                 android:id="@+id/tableRow23"
                                 android:layout_width="wrap_content"
-                                android:layout_height="wrap_content" >
+                                android:layout_height="wrap_content" android:paddingLeft="80dp" >
 
                                 <TextView
                                     android:id="@+id/textView25"
@@ -88,7 +88,7 @@
                                     android:layout_height="wrap_content"
                                     android:text="XXXX"
                                     android:textColor="#FFFFFF"
-                                    android:textSize="40sp" />
+                                    android:textSize="30sp" />
                             </TableRow>
 
                             <TableRow

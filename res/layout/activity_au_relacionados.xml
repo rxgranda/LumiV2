@@ -22,7 +22,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="Pinturas Relacionadas"
+            android:text="Autores Relacionadas por Estilo"
             android:textSize="40sp" />
 
        

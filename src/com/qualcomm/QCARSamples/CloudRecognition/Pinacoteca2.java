@@ -65,69 +65,50 @@ public class Pinacoteca2 extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 
 		super.onCreate(savedInstanceState);
-	
+
 		StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
 		StrictMode.setThreadPolicy(policy); 
 		setContentView(R.layout.activity_pinacoteca2);
 		////////////////////////////////////////////
 		File root = android.os.Environment.getExternalStorageDirectory(); 
-    	String FILENAME = root.getAbsolutePath()+"/pinacoteca.txt";
-		String string = server+"/pintura/ninallorando.json";
-		String segundo=server+"/pintura/almuerzo.json";
-		String aJsonString="b";
-
-
-//		FileOutputStream fos;
-//		try {
-//			fos = openFileOutput(FILENAME, Context.MODE_PRIVATE);
-//			String tmp=string+"\n"+segundo+"\n"+string+"\n"+segundo;
-//			fos.write(tmp.getBytes());
-//			fos.close();
-//		} catch (FileNotFoundException e) {			
-//			e.printStackTrace();
-//		} catch (IOException e) {			
-//			e.printStackTrace();
-//		}
-		///////////////////////////////////////////
-
-
-
-
-
-
-		//		TextView txt=(TextView) findViewById(R.id.textView1);
-		//		txt.setText(jsonList.get(0));    android:numColumns="3"
-
-
-		//grid.setNumColumns(numColumnasGrid);
-
-		LinkedList <String> jsonList= getPinturasGuardadas(FILENAME);
+		String FILENAME = root.getAbsolutePath()+"/pinacoteca.txt";
 
 		try{
-			for(String jsonDir:jsonList){
-				String json  = getJSON(jsonDir);
-				JSONObject jObject = new JSONObject(json);
-				String urlImagen = jObject.getString("picUrl");		
-				String titulo = jObject.getString("title");		
-				Drawable imagen = getImagen(urlImagen);			
-				Picture pintura = new Picture();
-				pintura.setAuthor(jObject.getString("author"));
-				pintura.setDescription(jObject.getString("description"));
-				pintura.setImage(imagen);
-				pintura.setPicUrl(urlImagen);
-				pintura.setTechnique(jObject.getString("technique"));
-				pintura.setTitle(titulo);
-				pintura.setYear(jObject.getString("year"));
+			LinkedList <String> jsonList= getPinturasGuardadas(FILENAME);
+			if (jsonList==null){
+				Drawable myIcon = getResources().getDrawable( R.drawable.artist_icon );
+				Picture p=new Picture();
+				p.setImage(myIcon);
+				p.setAuthor("No hay imágenes aún");
+				pinturas.add(p);
+			}else {
+				for(String jsonDir:jsonList){
+					String json  = getJSON(jsonDir);
+					JSONObject jObject = new JSONObject(json);
+					String urlImagen = jObject.getString("picUrl");		
+					String titulo = jObject.getString("title");		
+					Drawable imagen = getImagen(urlImagen);			
+					Picture pintura = new Picture();
+					pintura.setAuthor(jObject.getString("author"));
+					pintura.setDescription(jObject.getString("description"));
+					pintura.setImage(imagen);
+					pintura.setPicUrl(urlImagen);
+					pintura.setTechnique(jObject.getString("technique"));
+					pintura.setTitle(titulo);
+					pintura.setYear(jObject.getString("year"));
 
-				pinturas.add(pintura);
+					pinturas.add(pintura);
 
 
+				}
 			}
 			ordenar(0);
 
 		} catch (JSONException e) {		
 			e.printStackTrace();
-		} 
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
 	}
 
 	public void ordenar(int sort){
@@ -146,7 +127,7 @@ public class Pinacoteca2 extends Activity {
 			@Override
 			public void onItemClick(AdapterView<?> arg0, View arg1, int position,
 					long id) {
-			
+
 				Intent intent = new Intent(getBaseContext(), Detalle.class);		
 				Picture p= pinturas.get(position);
 				intent.putExtra("autor", p.getAuthor());
@@ -171,24 +152,24 @@ public class Pinacoteca2 extends Activity {
 		FileInputStream is;
 		try {
 			is = new FileInputStream(filename);
-		
-        
-        // create new input stream reader
-		InputStreamReader isr = new InputStreamReader(is);
-		try {
-			input = new BufferedReader(isr);
-			String line;
-			buffer = new StringBuffer();
 
-			while ((line = input.readLine()) != null) {
-				numColumnasGrid++;
-				
-				buffer.append(line + eol);
+
+			// create new input stream reader
+			InputStreamReader isr = new InputStreamReader(is);
+			try {
+				input = new BufferedReader(isr);
+				String line;
+				buffer = new StringBuffer();
+
+				while ((line = input.readLine()) != null) {
+					numColumnasGrid++;
+
+					buffer.append(line + eol);
+				}
+			} catch (FileNotFoundException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
 			}
-		} catch (FileNotFoundException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
@@ -204,7 +185,7 @@ public class Pinacoteca2 extends Activity {
 		String[] words = string2.split("\n");
 		LinkedList <String> jsonList=new LinkedList<String>(); 
 		for (String word: words) {
-			 DebugLog.LOGD(word);
+			DebugLog.LOGD(word);
 			jsonList.add(word);
 		}
 		numColumnasGrid=numColumnasGrid/3+1;
