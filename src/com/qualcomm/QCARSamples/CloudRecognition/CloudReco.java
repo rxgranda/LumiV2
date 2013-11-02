@@ -85,7 +85,7 @@ public class CloudReco extends Activity
 {
 	
     // Defines the Server URL to get the s data
-    private static final String mServerURL = "http://192.168.0.101:8080/lumi/pintura/";
+    private static final String mServerURL = "http://www.soravi.com/__tmp/lumi/pintura/";
     
    
     public void inicio(View view)
@@ -95,7 +95,7 @@ public class CloudReco extends Activity
         Intent i = new Intent(this, MenuLumi.class);
         startActivity(i);
 	}
-    String server="http://192.168.0.101:8080/lumi";
+    String server="http://www.soravi.com/__tmp/lumi";
     public void guardar(View view)
 	{
     	

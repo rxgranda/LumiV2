@@ -54,7 +54,7 @@ import com.qualcomm.QCARSamples.CloudRecognition.utils.DebugLog;
 @SuppressLint("NewApi")
 public class AuRelacionados extends Activity {
 
-	String server="http://192.168.0.101:8080/lumi";
+	String server="http://www.soravi.com/__tmp/lumi";
 	int numColumnasGrid=0;
 
 	ArrayList<Item> gridArray = new ArrayList<Item>();
