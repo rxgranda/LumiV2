@@ -37,7 +37,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 public class Detalle extends FragmentActivity implements ActionBar.TabListener {
-	static String server="http://192.168.0.101:8080/lumi";
+	static String server="http://www.soravi.com/__tmp/lumi/";
 	static String nameAutor="";
 	static Author autor;
 	/**
