@@ -28,6 +28,7 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
+import java.util.Scanner;
 import java.util.logging.Logger;
 
 import org.apache.http.util.ByteArrayBuffer;
@@ -124,7 +125,22 @@ public class CloudReco extends Activity
     		//true = append file
     		FileWriter fileWritter = new FileWriter(root.getAbsolutePath()+"/"+file.getName(),true);
     	        BufferedWriter bufferWritter = new BufferedWriter(fileWritter);    	            	        	
-			
+    	        Scanner scanner=null;
+    	        try {
+    	        	scanner = new Scanner(file);
+    	        } catch(FileNotFoundException e) { 
+    	            //handle this
+    	        }
+    	        //now read the file line by line...
+    	        boolean flagContol = false;
+    	        while (scanner.hasNextLine()) {
+    	            String line = scanner.nextLine();
+    	            
+    	            if(line.startsWith(string)) { 
+    	            	flagContol=true;
+    	            }
+    	        }
+    	    if(!flagContol){    
 			String tmp=string+eol;
 			bufferWritter.write(tmp);
 			 bufferWritter.flush();
@@ -136,6 +152,20 @@ public class CloudReco extends Activity
 	        builder.setPositiveButton("OK",null);
 	        builder.create();
 	        builder.show();  
+	        }else{
+	        
+				bufferWritter.close();	
+				ImageButton boton=(ImageButton)findViewById(R.id.imageButton3);
+				boton.setBackground(this.getResources().getDrawable(R.drawable.disabled));
+				boton.setEnabled(false);
+				AlertDialog.Builder builder = new AlertDialog.Builder(this);
+		        builder.setTitle("Pinacoteca");
+		        builder.setMessage("Ya existe la pintura seleccionada en su Pinacoteca");
+		        builder.setPositiveButton("OK",null);
+		        builder.create();
+		        builder.show();  
+	        }
+	        
 			
 		} catch (FileNotFoundException e) {			
 			e.printStackTrace();

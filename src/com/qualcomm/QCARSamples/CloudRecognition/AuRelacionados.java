@@ -268,15 +268,20 @@ public class AuRelacionados extends Activity {
 		switch (item.getItemId()) {
 		case R.id.item81:
 			Toast.makeText(this, "Ordenado  po Nombre", Toast.LENGTH_SHORT).show();
+			((TextView)findViewById(R.id.textView81)).setText("Autores Relacionadas Ordenados Alfabéticamente");
 			ordenar(0);
 			return true;
 		case R.id.item82:
 			Toast.makeText(this, "Ordenado por Apellido", Toast.LENGTH_SHORT).show();
+			((TextView)findViewById(R.id.textView81)).setText("Autores Relacionadas Ordenados por Apellido");
+			
 			ordenar(1);
 			//composeMessage();
 			return true;
 		case R.id.item83:
 			Toast.makeText(this, "Ordenado por Tecnica", Toast.LENGTH_SHORT).show();
+			((TextView)findViewById(R.id.textView81)).setText("Autores Relacionados Ordenados por Técnica");
+			
 			ordenar(2);
 			//composeMessage();
 			return true;

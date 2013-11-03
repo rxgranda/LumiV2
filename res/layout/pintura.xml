@@ -38,15 +38,16 @@
                         android:orientation="vertical" >
 
                         <TableLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content" 
-                            android:paddingLeft="10dp">
+                            android:layout_width="549dp"
+                            android:layout_height="wrap_content"
+                            android:paddingLeft="5dp" >
 
                             <TableRow
                                 android:id="@+id/tableRow1"
                                 android:layout_width="wrap_content"
-                                android:layout_height="wrap_content" 
-                                android:paddingLeft="80dp">
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="0dp"
+                                android:paddingLeft="10dp" >
 
                                 <TextView
                                     android:id="@+id/textView1"
@@ -70,7 +71,7 @@
                                 android:id="@+id/tableRow2"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content" 
-                                android:paddingLeft="80dp">
+                                android:paddingLeft="10dp">
 
                                 <TextView
                                     android:id="@+id/textView3"
@@ -93,7 +94,7 @@
                                 android:id="@+id/tableRow3"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content" 
-                                android:paddingLeft="80dp">
+                                android:paddingLeft="10dp">
 
                                 <TextView
                                     android:id="@+id/textView5"
@@ -137,9 +138,10 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_margin="20dp"
-                                android:textSize="20dp"
                                 android:lines="10"
-                                android:text="TextView" />
+                                android:text="TextView"
+                                android:textSize="25sp" />
+
                         </LinearLayout>
                     </ScrollView>
                 </LinearLayout>

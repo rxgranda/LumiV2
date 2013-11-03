@@ -269,15 +269,18 @@ public class PinturasRelacionadas extends Activity {
 		switch (item.getItemId()) {
 		case R.id.item91:
 			Toast.makeText(this, "Ordenado  Alfabéticamente", Toast.LENGTH_SHORT).show();
+			((TextView)findViewById(R.id.textView91)).setText("Pinturas Relacionadas Alfabéticamente");
 			ordenar(0);
 			return true;
 		case R.id.item92:
 			Toast.makeText(this, "Ordenado por Antiguedad", Toast.LENGTH_SHORT).show();
+			((TextView)findViewById(R.id.textView91)).setText("Pinturas Relacionadas por Antiguedad");
 			ordenar(1);
 			//composeMessage();
 			return true;
 		case R.id.item93:
 			Toast.makeText(this, "Ordenado por Autor", Toast.LENGTH_SHORT).show();
+			((TextView)findViewById(R.id.textView91)).setText("Pinturas Relacionadas por Autor");
 			ordenar(2);
 			//composeMessage();
 			return true;

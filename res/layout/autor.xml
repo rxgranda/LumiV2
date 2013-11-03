@@ -27,7 +27,7 @@
                             <TableRow
                                 android:id="@+id/tableRow21"
                                 android:layout_width="wrap_content"
-                                android:layout_height="wrap_content" android:paddingLeft="80dp" >
+                                android:layout_height="wrap_content" android:paddingLeft="10dp" >
 
                                 <TextView
                                     android:id="@+id/textView21"
@@ -50,7 +50,7 @@
                             <TableRow
                                 android:id="@+id/tableRow22"
                                 android:layout_width="wrap_content"
-                                android:layout_height="wrap_content" android:paddingLeft="80dp">
+                                android:layout_height="wrap_content" android:paddingLeft="10dp">
 
                                 <TextView
                                     android:id="@+id/textView23"
@@ -72,7 +72,7 @@
                             <TableRow
                                 android:id="@+id/tableRow23"
                                 android:layout_width="wrap_content"
-                                android:layout_height="wrap_content" android:paddingLeft="80dp" >
+                                android:layout_height="wrap_content" android:paddingLeft="10dp" >
 
                                 <TextView
                                     android:id="@+id/textView25"
@@ -117,7 +117,9 @@
                                 android:layout_height="wrap_content"
                                 android:layout_margin="20dp"
                                 android:lines="10"
-                                android:text="TextView" />
+                                android:text="TextView"
+                                android:textSize="25dp" />
+
                         </LinearLayout>
                     </ScrollView>
                 </LinearLayout>
